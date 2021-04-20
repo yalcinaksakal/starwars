@@ -16,14 +16,14 @@
 }
 
 .container {
-  margin-top: 0;
   display: flex;
   justify-content: center;
-  transform: scale(0.3);
+  transform: scale(0.5);
+  margin-top: -40px;
 }
 .ldio div {
   position: absolute;
-  border-width: 6px;
+  border-width: 8px;
   border-style: solid;
   opacity: 1;
   border-radius: 50%;

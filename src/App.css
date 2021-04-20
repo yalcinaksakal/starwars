@@ -1,18 +1,24 @@
+header,
 section {
   margin: 1rem auto;
   width: 90%;
   max-width: 40rem;
   text-align: center;
-  background-color: white;
-  padding: 2rem;
+  padding: 0rem 2rem;
   border-radius: 12px;
+}
+
+header {
+  margin-bottom: 5px;
+  padding: 0;
+  height: 40px;
 }
 
 button {
   font: inherit;
   cursor: pointer;
-  background: #230052;
-  border: 1px solid #230052;
+  background: #027310;
+  border: none;
   color: white;
   padding: 0.75rem 2rem;
   border-radius: 20px;
@@ -24,8 +30,15 @@ button:focus {
 
 button:hover,
 button:active {
-  background-color: #460897;
-  border-color: #460897;
+  background: #049f16;
 }
 
-
+p {
+  width: 90%;
+  margin: 30px auto;
+  padding: 5px;
+  border-radius: 10px;
+  text-align: center;
+  background: #783e34;
+  color: white;
+}

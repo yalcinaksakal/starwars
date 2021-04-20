@@ -9,12 +9,14 @@ const baseUrl = "https://swapi.dev/api/";
 function App() {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const [error, setError] = useState(null);
   const fetchMoviesHandler = async () => {
     setLoading(true);
     setMovies([]);
+    setError(null);
     try {
-      const response = await fetch(`${baseUrl}films/`);
+      const response = await fetch(`${baseUrl}film/`);
+      if (!response.ok) throw new Error("Couldn't get response from base URL");
       const data = await response.json();
       const transformedReults = data.results.map(movie => {
         return {
@@ -25,17 +27,17 @@ function App() {
         };
       });
       setMovies(transformedReults);
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
+    } catch (error) {
+      setError(error.message);
     }
+    setLoading(false);
   };
 
   return (
     <React.Fragment>
-      <section>
+      <header>
         <button onClick={fetchMoviesHandler}>Fetch Movies</button>
-      </section>
+      </header>
       {movies.length > 0 ? (
         <section>
           <MoviesList movies={movies} />
@@ -43,6 +45,7 @@ function App() {
       ) : (
         loading && <Spinner />
       )}
+      {!loading && error && <p>{error}</p>}
     </React.Fragment>
   );
 }
