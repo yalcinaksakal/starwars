@@ -19,7 +19,6 @@
   display: flex;
   justify-content: center;
   transform: scale(0.5);
-  margin-top: -40px;
 }
 .ldio div {
   position: absolute;

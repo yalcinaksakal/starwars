@@ -5,29 +5,40 @@ import "./App.css";
 import Spinner from "./UI/Spinner";
 import AddMovie from "./components/AddMovie";
 
-const baseUrl = "https://swapi.dev/api/";
+const movieUrl = "https://react-http-f069a-default-rtdb.firebaseio.com/";
 
 function App() {
   const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchMoviesHandler = useCallback(async () => {
+  const fetchMoviesHandler = useCallback(async (movie = null) => {
     setLoading(true);
     setMovies([]);
     setError(null);
+    const fetcParams = movie
+      ? {
+          method: "POST",
+          body: JSON.stringify(movie),
+          headers: { "Content-Type": "application/json" },
+        }
+      : {};
     try {
-      const response = await fetch(`${baseUrl}films/`);
-      if (!response.ok) throw new Error("Couldn't get response from base URL.");
+      const response = await fetch(`${movieUrl}movies.json`, fetcParams);
+      if (!response.ok)
+        throw new Error(
+          `Couldn't ${movie ? "get response from base URL." : "send data."}`
+        );
+      if (movie) return;
       const data = await response.json();
-      const transformedReults = data.results.map(movie => {
-        return {
-          id: movie.episode_id,
-          title: movie.title,
-          openingText: movie.opening_crawl,
-          release: movie.release_date,
-        };
-      });
+      const transformedReults = data
+        ? Object.keys(data).map(key => {
+            return {
+              ...data[key],
+              id: key,
+            };
+          })
+        : [];
       setMovies(transformedReults);
     } catch (error) {
       setError(error.message);
@@ -40,9 +51,12 @@ function App() {
   }, [fetchMoviesHandler]);
 
   const addMovieHandler = movie => {
-    console.log(movie);
+    fetchMoviesHandler(movie);
+    fetchMoviesHandler();
   };
-
+  const getMoviesHandler = () => {
+    fetchMoviesHandler();
+  };
   let content = <h4>Found no movies.</h4>;
 
   if (movies.length > 0)
@@ -52,12 +66,16 @@ function App() {
       </section>
     );
   if (error) content = <h4>{error}</h4>;
-  if (loading) content = <Spinner />;
+  if (loading) content = <h4>Fetching movies</h4>;
 
   return (
     <React.Fragment>
       <header>
-        <button onClick={fetchMoviesHandler}>Fetch Movies</button>
+        {loading ? (
+          <Spinner />
+        ) : (
+          <button onClick={getMoviesHandler}>Get Movies</button>
+        )}
       </header>
       {content}
       <section>
