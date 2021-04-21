@@ -29,17 +29,19 @@ function App() {
         throw new Error(
           `Couldn't ${movie ? "get response from base URL." : "send data."}`
         );
-      if (movie) return;
-      const data = await response.json();
-      const transformedReults = data
-        ? Object.keys(data).map(key => {
-            return {
-              ...data[key],
-              id: key,
-            };
-          })
-        : [];
-      setMovies(transformedReults);
+      if (movie) fetchMoviesHandler();
+      else {
+        const data = await response.json();
+        const transformedReults = data
+          ? Object.keys(data).map(key => {
+              return {
+                ...data[key],
+                id: key,
+              };
+            })
+          : [];
+        setMovies(transformedReults);
+      }
     } catch (error) {
       setError(error.message);
     }
@@ -52,7 +54,6 @@ function App() {
 
   const addMovieHandler = movie => {
     fetchMoviesHandler(movie);
-    fetchMoviesHandler();
   };
   const getMoviesHandler = () => {
     fetchMoviesHandler();
@@ -66,7 +67,7 @@ function App() {
       </section>
     );
   if (error) content = <h4>{error}</h4>;
-  if (loading) content = <h4>Fetching movies</h4>;
+  if (loading) content = <h4>Loading.</h4>;
 
   return (
     <React.Fragment>

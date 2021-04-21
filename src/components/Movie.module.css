@@ -1,6 +1,6 @@
 .movie {
   margin: 1rem;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   background-color: #1e2f2c;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 12px;
@@ -9,12 +9,16 @@
 }
 
 .movie h2 {
-  font-size: 2rem;
+  font-size: 1rem;
   color: #f7e702;
 }
 
 .movie h3 {
   color: #eccf77;
   margin: 0;
-  font-size: 1rem;
+  font-size: 0.6rem;
+}
+
+.movie p {
+  font-size: 0.8rem;
 }
