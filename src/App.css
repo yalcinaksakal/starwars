@@ -33,12 +33,13 @@ button:active {
   background: #049f16;
 }
 
-p {
-  width: 90%;
+h4 {
+  width: 300px;
   margin: 30px auto;
-  padding: 5px;
+  padding: 15px;
   border-radius: 10px;
   text-align: center;
-  background: #783e34;
+  font-weight: 400;
+  background: rgb(148, 73, 65);
   color: white;
 }
